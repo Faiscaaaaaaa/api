@@ -1,0 +1,118 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2 class="page-title" style="margin: 0;">Making Of do Projeto</h2>
+</div>
+
+<div style="max-width: 900px; margin: auto;">
+    <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 1.05rem; text-align: center;">Esta secção regista o desenvolvimento do portfolio como um diário de trabalho. Aqui estão descrições analíticas, reflexões de aprendizagem, desafios, conquistas e a utilização de IA generativa ao longo da construção do projeto.</p>
+    <p style="margin-bottom: 2rem; color: #475569; text-align: center;">Veja também os <a href="{% url 'portfolio:videotutoriais' %}">videotutoriais</a> com demonstrações de desenvolvimento Django, arquitetura do sistema e pipeline CI/CD.</p>
+
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.5rem; margin-bottom: 2rem;">
+        <h3 style="margin-top: 0; color: #0f172a;">Notas de avaliação</h3>
+        <ul style="color: #334155; line-height: 1.8; margin: 0; padding-left: 1.2rem;">
+            <li>Descreva o que fez em cada fase ou ficha, com foco na análise e nos argumentos.</li>
+            <li>Explique as decisões técnicas, as ferramentas usadas e as razões por trás delas.</li>
+            <li>Registe dificuldades, como as solucionou e o que aprendeu com cada desafio.</li>
+            <li>Mostre quais as conquistas que lhe deram mais alegria e porquê.</li>
+            <li>Detalhe onde e como usou IA generativa, incluindo prompts ou tarefas que a IA ajudou a resolver.</li>
+            <li>Adicione imagem(s) sempre que tenha registos visuais como desenhos, diagrama ER ou ecrãs de trabalho.</li>
+        </ul>
+    </div>
+
+    <div style="background: white; border: 1px solid #cbd5e1; border-radius: 18px; padding: 1.8rem; margin-bottom: 2rem; box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.2);">
+        <h3 style="margin-top: 0; color: #0f172a;">Arquitetura e pipeline CI/CD</h3>
+        <p style="color: #334155; line-height: 1.7; margin-bottom: 1rem;">Abaixo está um desenho inspirado no esquema de papel que mostra como o sistema está organizado: desenvolvimento local, repositório de código, pipeline de CI/CD, produção e armazenamento de dados/media.</p>
+        <div style="max-width: 100%; overflow: hidden; border-radius: 18px; border: 1px solid #e2e8f0; background: #f8fafc; padding: 1rem; margin-bottom: 1.5rem;">
+            <img src="{% static 'portfolio/cicd-paper-diagram.svg' %}" alt="Diagrama de arquitetura e CI CD" style="width: 100%; display: block;">
+        </div>
+        <div style="display: grid; gap: 1rem;">
+            <div style="background: #eef2ff; border-radius: 14px; padding: 1rem;">
+                <strong style="color: #1d4ed8;">1. Browser / Frontend</strong>
+                <p style="margin: 0.5rem 0 0 0; color: #334155; line-height: 1.6;">É a interface onde o utilizador interage com o portfolio. O HTML, CSS e JavaScript são servidos pelo Django e renderizados no navegador.</p>
+            </div>
+            <div style="background: #f0fdf4; border-radius: 14px; padding: 1rem;">
+                <strong style="color: #166534;">2. Codespaces</strong>
+                <p style="margin: 0.5rem 0 0 0; color: #334155; line-height: 1.6;">O ambiente de desenvolvimento onde o código foi escrito, testado e versionado antes do push para o repositório.</p>
+            </div>
+            <div style="background: #fefce8; border-radius: 14px; padding: 1rem;">
+                <strong style="color: #a16207;">3. GitHub Repository</strong>
+                <p style="margin: 0.5rem 0 0 0; color: #334155; line-height: 1.6;">Armazena todo o código, historial de versões e as branches usadas durante o desenvolvimento.</p>
+            </div>
+            <div style="background: #ede9fe; border-radius: 14px; padding: 1rem;">
+                <strong style="color: #5b21b6;">4. GitHub Actions</strong>
+                <p style="margin: 0.5rem 0 0 0; color: #334155; line-height: 1.6;">Automatiza testes, build e deploy. Esta pipeline garante que a publicação acontece de forma repetível e controlada.</p>
+            </div>
+            <div style="background: #fee2e2; border-radius: 14px; padding: 1rem;">
+                <strong style="color: #b91c1c;">5. Produção em Docker</strong>
+                <p style="margin: 0.5rem 0 0 0; color: #334155; line-height: 1.6;">O app Django corre dentro de um container Docker que entrega a aplicação e os ficheiros estáticos em produção.</p>
+            </div>
+            <div style="background: #ecfeff; border-radius: 14px; padding: 1rem;">
+                <strong style="color: #0c4a6e;">6. Neon PostgreSQL</strong>
+                <p style="margin: 0.5rem 0 0 0; color: #334155; line-height: 1.6;">Guarda os dados essenciais do projeto: utilizadores, artigos, comentários, ratings e configurações.</p>
+            </div>
+            <div style="background: #f5f3ff; border-radius: 14px; padding: 1rem;">
+                <strong style="color: #3730a3;">7. Cloudinary</strong>
+                <p style="margin: 0.5rem 0 0 0; color: #334155; line-height: 1.6;">Armazena imagens e media fora do servidor principal, garantindo carregamento rápido e gestão de ficheiros mais simples.</p>
+            </div>
+        </div>
+        <p style="margin-top: 1.5rem; color: #475569; line-height: 1.7;">Este desenho e a descrição ajudam a mostrar claramente o fluxo completo: desenvolvimento local em Codespaces, push para GitHub, execução de CI/CD, deploy em Docker, e consumo do site pelo browser com dados armazenados em Neon e media em Cloudinary.</p>
+    </div>
+
+    {% for post in makingofs %}
+    <article class="card" style="margin-bottom: 2.5rem; box-shadow: 0 10px 25px -12px rgba(15, 23, 42, 0.25); border-radius: 18px; overflow: hidden;">
+        <div style="padding: 2rem; background: white;">
+            <header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem;">
+                <div>
+                    <h3 style="margin: 0 0 0.4rem 0; color: var(--primary); font-size: 1.55rem;">{{ post.titulo }}</h3>
+                    <p style="margin: 0; color: #475569; font-size: 0.98rem;">Relato reflexivo do desenvolvimento do projeto, com foco na experiência e nas aprendizagens.</p>
+                </div>
+                <span style="font-size: 0.9rem; color: var(--text-muted); background: #f8fafc; padding: 0.45rem 0.8rem; border-radius: 999px;">{{ post.data|date:"d M Y" }}</span>
+            </header>
+
+            {% if post.imagem_caderno %}
+            <div style="margin-bottom: 1.7rem; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0;">
+                <img src="{{ post.imagem_caderno.url }}" alt="Imagem do registo de making of" style="width: 100%; height: auto; display: block;">
+            </div>
+            {% endif %}
+
+            <div style="margin-bottom: 1.5rem;">
+                <h4 style="margin-bottom: 0.6rem; color: #1e293b;">Processo e Decisões</h4>
+                <div style="font-size: 1rem; line-height: 1.8; color: #334155;">
+                    {{ post.descricao_processo|linebreaksbr }}
+                </div>
+            </div>
+
+            {% if post.erros_encontrados %}
+            <div style="background-color: #fef2f2; border-left: 4px solid var(--danger); padding: 1rem 1.5rem; border-radius: 0 14px 14px 0; margin-bottom: 1.5rem;">
+                <h4 style="color: var(--danger); margin-bottom: 0.5rem;">Dificuldades e Soluções</h4>
+                <div style="font-size: 0.96rem; line-height: 1.7; color: #7f1d1d;">
+                    {{ post.erros_encontrados|linebreaksbr }}
+                </div>
+            </div>
+            {% endif %}
+
+            <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 14px; padding: 1.3rem; margin-bottom: 1.5rem;">
+                <h4 style="margin-top: 0; color: #1d4ed8;">Aprendizados e Conquistas</h4>
+                <p style="margin: 0; color: #334155; line-height: 1.7;">Registe aqui as aprendizagens mais significativas, os momentos em que as decisões começaram a fazer sentido e as pequenas conquistas que deram confiança ao projeto.</p>
+            </div>
+
+            {% if post.uso_ia %}
+            <div style="background-color: #e0f2fe; border-left: 4px solid #0ea5e9; padding: 1rem 1.5rem; border-radius: 0 14px 14px 0;">
+                <h4 style="color: #0369a1; margin-bottom: 0.5rem;">Uso de IA Generativa</h4>
+                <div style="font-size: 0.96rem; line-height: 1.7; color: #1e3a8a;">
+                    {{ post.uso_ia|linebreaksbr }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </article>
+    {% empty %}
+        <div style="text-align: center; color: var(--text-muted); padding: 2rem 1rem; border: 1px dashed #cbd5e1; border-radius: 16px;">
+            <p style="font-size: 1rem; margin: 0 0 0.75rem 0;">Ainda não existem registos no Making Of.</p>
+            <p style="margin: 0;">A página está pronta para receber entradas detalhadas com texto analítico, imagens de trabalho e referência ao uso de IA generativa.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

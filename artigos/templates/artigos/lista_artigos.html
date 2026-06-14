@@ -1,0 +1,107 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Artigos{% endblock %}
+
+{% block content %}
+<div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1 style="margin: 0;">Artigos</h1>
+        {% if is_blogger %}
+            <a href="{% url 'artigos:criar_artigo' %}" class="btn btn-add">
+                ➕ Novo Artigo
+            </a>
+        {% endif %}
+    </div>
+
+    {% if artigos %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem;">
+            {% for artigo in artigos %}
+                <div style="background: var(--bg-card); border-radius: 0.75rem; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.2s; cursor: pointer;"
+                     onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+                    {% if artigo.fotografia %}
+                        <img src="{{ artigo.fotografia.url }}" alt="{{ artigo.titulo }}" 
+                             style="width: 100%; height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            📝
+                        </div>
+                    {% endif %}
+                    
+                    <div style="padding: 1.5rem;">
+                        <h3 style="margin: 0 0 0.5rem; font-size: 1.25rem;">
+                            <a href="{% url 'artigos:detalhe_artigo' artigo.id %}" style="text-decoration: none; color: inherit;">
+                                {{ artigo.titulo }}
+                            </a>
+                        </h3>
+                        
+                        <p style="color: var(--secondary); font-size: 0.9rem; margin: 0.5rem 0;">
+                            Por <strong>{{ artigo.autor.username }}</strong>
+                        </p>
+                        
+                        <p style="color: var(--secondary); font-size: 0.85rem; margin: 0.5rem 0;">
+                            {{ artigo.data_criacao|date:"d M Y" }}
+                        </p>
+                        
+                        <p style="color: var(--secondary); margin: 1rem 0 0; line-height: 1.5;">
+                            {{ artigo.texto|truncatewords:20 }}
+                        </p>
+                        
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+                            <div style="display: flex; gap: 1rem; font-size: 0.9rem; color: var(--secondary);">
+                                <span>❤️ {{ artigo.total_likes }}</span>
+                                <span>💬 {{ artigo.total_comentarios }}</span>
+                                <span>⭐ {% if artigo.average_rating %}{{ artigo.average_rating|floatformat:1 }}{% else %}Sem avaliação{% endif %}</span>
+                            </div>
+                            <a href="{% url 'artigos:detalhe_artigo' artigo.id %}" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+                                Ler mais →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div style="text-align: center; padding: 3rem 2rem; background: var(--bg-card); border-radius: 1rem;">
+            <p style="color: var(--secondary); font-size: 1.1rem; margin: 0;">
+                Ainda não há artigos. {% if is_blogger %}<a href="{% url 'artigos:criar_artigo' %}">Crie o primeiro!</a>{% endif %}
+            </p>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    :root {
+        --primary: #3b82f6;
+        --success: #10b981;
+        --danger: #ef4444;
+        --secondary: #64748b;
+        --bg-card: #ffffff;
+        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.6rem 1.2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9rem;
+        gap: 0.5rem;
+    }
+
+    .btn-add {
+        background-color: var(--success);
+        color: white;
+    }
+
+    .btn-add:hover {
+        background-color: #059669;
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'portfolio/layout.html' %}
+
+{% block content %}
+<h2>Detalhe do Evento</h2>
+
+{% if erro %}
+    <div class="alert-error">{{ erro }}</div>
+{% else %}
+    {% if item %}
+        {% if edit_allowed %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="card">
+                    <h3>Editar Evento</h3>
+                    {% for k,v in item.items %}
+                        <div class="filter-group">
+                            <label>{{ k|title }}</label>
+                            {% if k == 'data' %}
+                                <input type="date" name="{{ k }}" value="{{ v }}">
+                            {% elif k|stringformat:'s' == 'capacidade' %}
+                                <input type="number" name="{{ k }}" value="{{ v }}">
+                            {% else %}
+                                <input type="text" name="{{ k }}" value="{{ v }}">
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn">✓ Guardar Alterações</button>
+                </div>
+            </form>
+        {% else %}
+            <div class="alert-warning">⚠️ A API do colega não permite editar este recurso com a chave atual.</div>
+            <div class="card">
+                <h3>Informações do Evento</h3>
+                <table>
+                    <tbody>
+                        {% for k,v in item.items %}
+                            <tr>
+                                <td style="width: 30%; font-weight: 600; color: var(--primary);">{{ k|title }}</td>
+                                <td>{{ v }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="alert-error">Nenhum detalhe disponível.</div>
+    {% endif %}
+{% endif %}
+
+<p class="mt-4"><a href="/api/projetos/" class="btn btn-secondary">← Voltar à lista</a></p>
+{% endblock %}

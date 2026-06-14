@@ -1,0 +1,77 @@
+{% extends 'portfolio/layout.html' %}
+
+{% block content %}
+
+<h2>Eventos do Colega</h2>
+
+<form method="get" class="filter-section">
+    <div class="filter-group">
+        <label>Ordenar</label>
+        <select name="ordering">
+            <option value="">--</option>
+            <option value="-id" {% if ordering == '-id' %}selected{% endif %}>Mais recentes</option>
+            <option value="id" {% if ordering == 'id' %}selected{% endif %}>Mais antigos</option>
+        </select>
+    </div>
+    <div class="filter-group">
+        <label>Pesquisar</label>
+        <input type="text" name="search" value="{{ search }}" placeholder="Título do evento...">
+    </div>
+    <div class="filter-actions">
+        <button type="submit" class="btn">Aplicar Filtros</button>
+    </div>
+</form>
+
+{% if erro %}
+    <div class="alert-error">Ocorreu um erro: {{ erro }}</div>
+{% else %}
+    <div class="alert-info">✓ Conexão à API bem-sucedida!</div>
+    
+    <div class="results-info">
+        <strong>Resultados:</strong> {{ dados_lista|length }} evento(s)
+        {% if search %}<br><strong>Pesquisa:</strong> {{ search }}{% endif %}
+        {% if ordering %}<br><strong>Ordenação:</strong> {{ ordering }}{% endif %}
+    </div>
+
+    {% if dados_lista %}
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 10%;">ID</th>
+                    <th>Título</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in dados_lista %}
+                    <tr>
+                        <td>#{{ item.id }}</td>
+                        <td>
+                            {% if item.titulo %}
+                                {{ item.titulo }}
+                            {% elif item.title %}
+                                {{ item.title }}
+                            {% elif item.name %}
+                                {{ item.name }}
+                            {% else %}
+                                {{ item }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="card">
+            <p class="text-center text-muted">Nenhum evento encontrado com esses filtros.</p>
+        </div>
+    {% endif %}
+
+    <div class="card mt-4">
+        <h3>Dados Brutos (Debug)</h3>
+        <pre style="background: #f3f4f6; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-size: 0.75rem;">{{ dados_colega|safe }}</pre>
+    </div>
+    
+    <p class="text-center mt-4"><a href="{{ api_docs }}" target="_blank" class="btn">📖 Ver Documentação da API</a></p>
+{% endif %}
+
+{% endblock %}

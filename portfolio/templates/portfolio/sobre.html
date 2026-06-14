@@ -1,0 +1,110 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2 class="page-title">Sobre esta Aplicação</h2>
+<p style="margin-bottom: 1.5rem; color: var(--text-muted);">Nesta página apresento a aplicação de forma completa: a modelação no papel, a arquitetura Django, a estrutura do site, as tecnologias usadas, o repositório GitHub, a solução em produção com Neon e Cloudinary e a pipeline de CI/CD.</p>
+<p style="margin-bottom: 2rem; color: #475569;">O site também disponibiliza uma página dedicada de <a href="{% url 'portfolio:videotutoriais' %}">videotutoriais</a> com demonstrações do desenvolvimento, arquitetura e uso de Codespaces.</p>
+
+<section class="form-container" style="max-width: 1000px; margin-bottom: 2rem;">
+    <h3 style="color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem;">1. Visão Geral da Aplicação</h3>
+    <p style="margin-top: 1rem; color: #334155; line-height: 1.8;">Este portfólio foi construído como uma aplicação Django com três apps principais:</p>
+    <ul style="line-height: 1.8; margin-left: 1.5rem;">
+        <li><strong>portfolio:</strong> páginas públicas de apresentação, making-of, sobre, cursos e dados pessoais.</li>
+        <li><strong>artigos:</strong> funcionalidades de blog, artigos, comentários, likes e ratings médios.</li>
+        <li><strong>accounts:</strong> autenticação, registo de utilizadores e gestão do grupo <em>bloggers</em>.</li>
+    </ul>
+    <p style="margin-top: 1rem; color: #334155; line-height: 1.8;">A aplicação suporta autenticação, autorização por grupos, CRUD de conteúdos e exibição responsiva, reunindo front-end e back-end numa solução integrada.</p>
+</section>
+
+<section class="form-container" style="max-width: 1000px; margin-bottom: 2rem;">
+    <h3 style="color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem;">2. Modelação no Papel e Arquitetura Django</h3>
+    <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;">
+        <div style="flex: 1; min-width: 320px;">
+            <p><strong>Diagrama MVT:</strong></p>
+            <img src="{{ MEDIA_URL }}mvt.png" alt="Desenho da Arquitetura MVT" style="max-width: 100%; border: 1px solid #ddd; border-radius: 8px;">
+        </div>
+        <div style="flex: 1; min-width: 320px;">
+            <p style="color: #334155; line-height: 1.8;">A arquitetura usa o padrão <strong>MVT</strong>, onde as <strong>Models</strong> representam os dados, as <strong>Views</strong> tratam pedidos e lógica e os <strong>Templates</strong> geram o HTML para a interface do utilizador.</p>
+            <p style="color: #334155; line-height: 1.8;">Esta separação facilita manutenção, permite reutilizar componentes e ajuda a desenvolver funcionalidades como a lista de artigos, o formulário de registo e a página de making-of de forma modular.</p>
+        </div>
+    </div>
+    <div style="margin-top: 2rem;">
+        <p><strong>Diagrama Entidade-Relacionamento:</strong></p>
+        <img src="{{ MEDIA_URL }}der.png" alt="Diagrama Entidade Relação" style="max-width: 100%; border: 1px solid #ddd; border-radius: 8px;">
+    </div>
+    <div style="margin-top: 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 14px;">
+        <p style="margin: 0; color: #334155; line-height: 1.7;"><strong>Componentes principais:</strong> utilizadores, artigos, comentários, ratings, projetos, licenciaturas, unidades curriculares, tecnologias e making-of.</p>
+    </div>
+</section>
+
+<section class="form-container" style="max-width: 1000px; margin-bottom: 2rem;">
+    <h3 style="color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem;">3. Tecnologias Utilizadas</h3>
+    <div style="display: grid; gap: 1.2rem; margin-top: 1rem;">
+        <div style="border: 1px solid #e2e8f0; padding: 1.4rem; border-radius: 12px; background: white;"><strong>Django 4.2</strong><p style="margin: 0.65rem 0 0 0; color: #475569; line-height: 1.7;">Framework principal do backend, responsável pelo ORM, autenticação, views e templates.</p></div>
+        <div style="border: 1px solid #e2e8f0; padding: 1.4rem; border-radius: 12px; background: white;"><strong>Python</strong><p style="margin: 0.65rem 0 0 0; color: #475569; line-height: 1.7;">Linguagem usada para lógica, modelos e manipulação de dados.</p></div>
+        <div style="border: 1px solid #e2e8f0; padding: 1.4rem; border-radius: 12px; background: white;"><strong>HTML/CSS/JavaScript</strong><p style="margin: 0.65rem 0 0 0; color: #475569; line-height: 1.7;">Construção das páginas, navegação, menus dropdown e responsividade.</p></div>
+        <div style="border: 1px solid #e2e8f0; padding: 1.4rem; border-radius: 12px; background: white;"><strong>GitHub</strong><p style="margin: 0.65rem 0 0 0; color: #475569; line-height: 1.7;">Versão e histórico do código, uso de branches e commits.</p></div>
+        <div style="border: 1px solid #e2e8f0; padding: 1.4rem; border-radius: 12px; background: white;"><strong>Neon PostgreSQL</strong><p style="margin: 0.65rem 0 0 0; color: #475569; line-height: 1.7;">Base de dados em produção para dados de utilizadores, artigos e interações.</p></div>
+        <div style="border: 1px solid #e2e8f0; padding: 1.4rem; border-radius: 12px; background: white;"><strong>Cloudinary</strong><p style="margin: 0.65rem 0 0 0; color: #475569; line-height: 1.7;">Armazenamento externo de media e imagens para não sobrecarregar o servidor de aplicação.</p></div>
+    </div>
+</section>
+
+<section class="form-container" style="max-width: 1000px; margin-bottom: 2rem;">
+    <h3 style="color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem;">4. Estrutura do Site</h3>
+    <p style="margin-top: 1rem; color: #334155; line-height: 1.7;">O site é organizado em páginas principais que representam os domínios desta aplicação:</p>
+    <ul style="line-height: 1.8; margin-left: 1.5rem;">
+        <li><strong>Landing:</strong> página inicial de apresentação com navegação rápida.</li>
+        <li><strong>Pessoal:</strong> competências, formações, interesses e contactos.</li>
+        <li><strong>Making Of:</strong> registos de desenvolvimento e reflexão crítica.</li>
+        <li><strong>Sobre:</strong> esta página técnica com arquitetura e tecnologias.</li>
+        <li><strong>Cursos:</strong> licenciaturas, unidades curriculares e projetos.</li>
+        <li><strong>Artigos:</strong> blog com autor, data, comentários e ratings.</li>
+        <li><strong>Login / Registo:</strong> autenticação e grupo de bloggers para criação de artigos.</li>
+    </ul>
+    <div style="margin-top: 1.5rem;">
+        <img src="{{ MEDIA_URL }}mapa.png" alt="Mapa de Navegação do Site" style="max-width: 100%; border: 1px solid #ddd; border-radius: 8px;">
+    </div>
+</section>
+
+<section class="form-container" style="max-width: 1000px; margin-bottom: 2rem;">
+    <h3 style="color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem;">5. Arquitetura de Produção</h3>
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 14px;">
+        <p style="margin: 0 0 0.75rem 0; color: #334155; line-height: 1.7;"><strong>Em produção</strong>, o app Django corre de forma isolada, com a base de dados em Neon PostgreSQL e as imagens armazenadas em Cloudinary. Esta separação garante maior performance e fiabilidade.</p>
+        <p style="margin: 0; color: #334155; line-height: 1.7;">O backend lida com autenticação, artigos, comentários e conteúdos estáticos, enquanto Neon guarda dados relacionais e Cloudinary gere media de forma escalável.</p>
+    </div>
+</section>
+
+<section class="form-container" style="max-width: 1000px;">
+    <h3 style="color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem;">6. Pipeline CI/CD</h3>
+    <div style="background: white; border: 1px solid #cbd5e1; border-radius: 18px; padding: 1.8rem; box-shadow: 0 15px 30px -20px rgba(15, 23, 42, 0.22); margin-top: 1rem;">
+        <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">O fluxo de entrega segue um processo automatizado e controlado:</p>
+        <ul style="line-height: 1.8; margin-left: 1.5rem;">
+            <li><strong>Desenvolvimento local:</strong> o código é escrito e testado em Codespaces ou localmente.</li>
+            <li><strong>Repositório GitHub:</strong> o código é versionado e guardado no GitHub.</li>
+            <li><strong>GitHub Actions:</strong> executa validações, testes e build automático.</li>
+            <li><strong>Deploy:</strong> o código aprovado é publicado em produção, mantendo a aplicação atualizada.</li>
+        </ul>
+        <div style="margin-top: 1.5rem; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; background: #f8fafc; padding: 1rem;">
+            <img src="{% static 'portfolio/cicd-paper-diagram.svg' %}" alt="Diagrama de arquitetura e CI CD" style="width: 100%; display: block;">
+        </div>
+    </div>
+</section>
+
+<section class="form-container" style="max-width: 1000px; margin-top: 2rem; margin-bottom: 2rem;">
+    <h3 style="color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem;">7. Aprendizagens e Desafios</h3>
+    <div style="display: grid; gap: 1.2rem; margin-top: 1rem;">
+        <div style="background: #f0f9ff; border-radius: 14px; padding: 1.2rem;"><strong>Dificuldades superadas</strong><p style="margin: 0.7rem 0 0 0; color: #334155; line-height: 1.7;">Resolvi problemas como a necessidade de Pillow para ImageField, a correção do uso de `markdownify` e a configuração do grupo `bloggers`.</p></div>
+        <div style="background: #ecfdf5; border-radius: 14px; padding: 1.2rem;"><strong>Motivos de orgulho</strong><p style="margin: 0.7rem 0 0 0; color: #334155; line-height: 1.7;">Fico orgulhoso do blog com comentários e ratings, do menu responsivo e da arquitetura clara de produção.</p></div>
+        <div style="background: #fefce8; border-radius: 14px; padding: 1.2rem;"><strong>Uso de IA Generativa</strong><p style="margin: 0.7rem 0 0 0; color: #334155; line-height: 1.7;">Usei IA para apoiar a escrita do relatório, estruturar o conteúdo da página e melhorar a explicação da arquitetura.</p></div>
+    </div>
+</section>
+
+<section class="form-container" style="max-width: 1000px; margin-bottom: 2rem;">
+    <h3 style="color: var(--primary); border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem;">8. Repositório GitHub</h3>
+    <div style="margin-top: 1rem; background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 14px; text-align: center;">
+        <p style="margin: 0 0 1rem 0; color: #334155; line-height: 1.7;">O código está disponível no repositório do projeto para consulta e acompanhamento da evolução.</p>
+        <a href="{{ github_repo }}" target="_blank" rel="noopener noreferrer" class="btn btn-edit" style="font-size: 1rem; padding: 0.75rem 1.75rem;">Ver Repositório no GitHub</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="landing-hero">
+    <div class="hero-copy">
+        <span class="eyebrow">Portfólio Digital</span>
+        <h1>Olá, sou o Diogo Faísca — aqui partilho projetos, formação e ideias em frente ao código.</h1>
+        <p>Esta é a página de chegada ao meu portfolio. Navegue rapidamente pelas minhas páginas de formação, TFCs, making of e sobre mim.</p>
+
+        <div class="hero-actions">
+            <a href="{% url 'portfolio:cursos' %}" class="btn btn-primary">Ver formação</a>
+            <a href="{% url 'portfolio:pessoal' %}" class="btn btn-secondary">Sobre mim</a>
+        </div>
+
+        <nav class="hero-menu" aria-label="Menu da landing page">
+            <a href="{% url 'portfolio:cursos' %}">Formação</a>
+            <a href="{% url 'portfolio:pessoal' %}">Sobre</a>
+            <a href="{% url 'portfolio:tfcs' %}">TFCs</a>
+            <a href="{% url 'portfolio:makingof' %}">Making Of</a>
+            <a href="{% url 'portfolio:sobre' %}">App</a>
+        </nav>
+    </div>
+
+    <div class="hero-image">
+        <img src="{% static 'portfolio/landing-hero.svg' %}" alt="Imagem de destaque do portfólio" />
+    </div>
+</section>
+{% endblock %}

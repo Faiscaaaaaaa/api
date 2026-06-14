@@ -1,0 +1,20 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<div class="form-container">
+    <h2 style="margin-bottom: 2rem; color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem;">
+        {{ titulo }}
+    </h2>
+    
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-fields">
+            {{ form.as_p }}
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-edit">Guardar Alterações</button>
+            <a href="javascript:history.back()" class="btn btn-back">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

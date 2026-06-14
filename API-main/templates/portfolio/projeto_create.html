@@ -1,0 +1,50 @@
+{% extends 'portfolio/layout.html' %}
+
+{% block content %}
+<h2>Criar Novo Evento</h2>
+
+{% if erro %}
+    <div class="alert-error">
+        <strong>Erro ao criar evento:</strong>
+        <pre>{{ erro }}</pre>
+    </div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="card">
+        <h3>Preencha os campos obrigatórios</h3>
+        
+        <div class="filter-group">
+            <label>* Título</label>
+            <input type="text" name="titulo" value="{{ form_data.titulo|default:'' }}" placeholder="Ex: Conferência de Tecnologia 2026" required>
+        </div>
+
+        <div class="filter-group">
+            <label>* Descrição</label>
+            <textarea name="descricao" placeholder="Descreva o evento..." required>{{ form_data.descricao|default:'' }}</textarea>
+        </div>
+
+        <div class="filter-group">
+            <label>* Data</label>
+            <input type="date" name="data" value="{{ form_data.data|default:'' }}" required>
+        </div>
+
+        <div class="filter-group">
+            <label>* Localização</label>
+            <input type="text" name="localizacao" value="{{ form_data.localizacao|default:'' }}" placeholder="Ex: Lisboa, Sala A" required>
+        </div>
+
+        <div class="filter-group">
+            <label>* Capacidade</label>
+            <input type="number" name="capacidade" value="{{ form_data.capacidade|default:'' }}" placeholder="Número de participantes" required>
+        </div>
+
+        <div class="d-flex">
+            <button type="submit" class="btn">✓ Criar Evento</button>
+            <a href="/api/projetos/" class="btn btn-secondary">← Cancelar</a>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

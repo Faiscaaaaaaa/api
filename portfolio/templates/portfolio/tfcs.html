@@ -1,0 +1,17 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<h2 class="page-title">Trabalhos Finais de Curso</h2>
+<div class="card-grid">
+    {% for tfc in tfcs %}
+    <article class="card {% if tfc.destaque %}destaque{% endif %}">
+        <h3>{{ tfc.titulo }}</h3>
+        <p style="font-size: 0.9rem;"><strong>Ano:</strong> {{ tfc.ano }} | <strong>Autores:</strong> {{ tfc.autores }}</p>
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 1rem 0;">
+        <p style="font-size: 0.95rem;">{{ tfc.resumo }}</p>
+        {% if tfc.link_pdf %}
+            <a href="{{ tfc.link_pdf }}" target="_blank" style="display: inline-block; margin-top: 1rem; color: var(--accent); font-weight: bold; text-decoration: none;">Ver Documento PDF →</a>
+        {% endif %}
+    </article>
+    {% endfor %}
+</div>
+{% endblock %}

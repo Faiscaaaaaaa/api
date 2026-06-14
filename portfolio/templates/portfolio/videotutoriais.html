@@ -1,0 +1,51 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2 class="page-title">Videotutoriais</h2>
+<p style="margin-bottom: 1.5rem; color: var(--text-muted);">Aqui estão os videotutoriais do projeto, com explicações de desenvolvimento, arquitetura, pipeline CI/CD e um guia prático de alteração em Codespaces.</p>
+
+<section class="form-container" style="max-width: 1000px; margin-bottom: 2rem;">
+    <h3 style="margin-bottom: 1rem; color: var(--primary);">1. Desenvolvimento da aplicação Django</h3>
+    <p style="color: #334155; line-height: 1.8;">Apresenta a construção da aplicação Django, a modelação de dados, a criação de páginas e formulários, e a integração do blog com comentários e ratings.</p>
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; border: 1px solid #e2e8f0;">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Videotutorial de desenvolvimento Django" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe>
+    </div>
+    <p style="margin-top: 1rem; color: #475569;">Este vídeo também está referenciado na página Sobre a App e no Making Of.</p>
+</section>
+
+<section class="form-container" style="max-width: 1000px; margin-bottom: 2rem;">
+    <h3 style="margin-bottom: 1rem; color: var(--primary);">2. Sistema Web e Pipeline CI/CD</h3>
+    <p style="color: #334155; line-height: 1.8;">Explica a arquitetura do sistema, o ambiente de desenvolvimento, produção, o uso de Neon e Cloudinary, e a configuração da pipeline de CI/CD.</p>
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; border: 1px solid #e2e8f0;">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Videotutorial arquitetura e CI/CD" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe>
+    </div>
+    <ul style="margin-top: 1rem; color: #334155; line-height: 1.7; padding-left: 1.25rem;">
+        <li>Ambiente de desenvolvimento e produção.</li>
+        <li>Ambiente virtual, variáveis de ambiente e `.gitignore`.</li>
+        <li>Neon PostgreSQL: vantagens vs SQLite.</li>
+        <li>Cloudinary para media e imagens.</li>
+        <li>Desafios, IAGen e aprendizados.</li>
+    </ul>
+</section>
+
+<section class="form-container" style="max-width: 1000px; margin-bottom: 2rem;">
+    <h3 style="margin-bottom: 1rem; color: var(--primary);">3. Developer em ação</h3>
+    <p style="color: #334155; line-height: 1.8;">Mostra como iniciar um Codespace novo, instalar dependências, configurar ambiente virtual e `.env`, efetuar alterações, commitar, pushar e verificar o GitHub Actions em ação.</p>
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; border: 1px solid #e2e8f0;">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Videotutorial developer em ação" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe>
+    </div>
+    <ul style="margin-top: 1rem; color: #334155; line-height: 1.7; padding-left: 1.25rem;">
+        <li>Criação de Codespaces e instalação do ambiente.</li>
+        <li>Criação e uso de `venv`.</li>
+        <li>Instalação de `requirements.txt`.</li>
+        <li>Gestão de `.env` e variáveis de ambiente.</li>
+        <li>Commit e push para GitHub.</li>
+        <li>Visualização do GitHub Actions e deploy em produção.</li>
+    </ul>
+</section>
+
+{% endblock %}
+'''
+path.write_text(content, encoding='utf-8')
+PY

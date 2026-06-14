@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Swagger UI (protegido)</title>
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@4.18.3/swagger-ui.css" />
+  </head>
+  <body>
+    <div id="swagger-ui"></div>
+    <script src="https://unpkg.com/swagger-ui-dist@4.18.3/swagger-ui-bundle.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const apiKey = params.get('api_key');
+      const ui = SwaggerUIBundle({
+        url: "{{ openapi_url }}",
+        dom_id: '#swagger-ui',
+        presets: [SwaggerUIBundle.presets.apis],
+        layout: 'BaseLayout',
+        requestInterceptor: (req) => {
+          if (apiKey) {
+            req.headers['X-API-Key'] = apiKey;
+          }
+          return req;
+        }
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    container_name: django-app
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env

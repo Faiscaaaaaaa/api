@@ -1,0 +1,50 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<div class="magic-confirm">
+    <div class="magic-confirm__icon">✉️</div>
+    <h2>Verifique o seu email</h2>
+    <p>Se o endereço introduzido existir na nossa base de dados, receberá um link de acesso na sua caixa de entrada.</p>
+    <p class="magic-confirm__sub">Não se esqueça de verificar a pasta de spam.</p>
+    <a href="{% url 'accounts:login' %}" class="btn btn-back">Voltar ao login</a>
+</div>
+
+<style>
+.magic-confirm {
+    max-width: 480px;
+    margin: 6rem auto;
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--card-bg, #1a1a2e);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    animation: fadeUp 0.5s ease both;
+}
+.magic-confirm__icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.2rem;
+    animation: bounce 1s ease 0.4s both;
+}
+.magic-confirm h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+.magic-confirm p {
+    color: var(--text-muted, #aaa);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+.magic-confirm__sub {
+    font-size: 0.85rem;
+    margin-bottom: 2rem !important;
+}
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+</style>
+{% endblock %}

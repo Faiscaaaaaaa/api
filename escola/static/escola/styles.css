@@ -1,0 +1,128 @@
+/* escola/static/escola/styles.css */
+/* No topo do teu escola/static/escola/styles.css */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Ajuste para o scroll não ficar colado ao topo (opcional) */
+article[id^="curso-"] {
+    scroll-margin-top: 100px; /* Isto evita que o card fique escondido debaixo do header */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* BODY */
+body {
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: #e6ebf2;
+    color: #111827;
+    line-height: 1.5;
+}
+
+/* HEADER PRINCIPAL */
+body > header {
+    background: #1f2937;
+    color: white;
+    padding: 20px 40px;
+}
+
+body > header h1 {
+    font-size: 26px;
+}
+
+body > header nav a {
+    color: #d1d5db;
+    margin-right: 20px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+body > header nav a:hover {
+    color: white;
+}
+
+/* MAIN */
+main {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+/* CARD */
+section > article {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: all 0.25s ease;
+    margin-bottom: 20px;
+}
+
+section > article:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 35px rgba(0,0,0,0.18);
+}
+
+article > header > h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+article > section > h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+}
+
+/* LISTA */
+article > section > ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* --- A TUA CLASSE BTN-CURSO --- */
+.btn-curso {
+    background: #2563eb;
+    color: white !important; /* Força o branco mesmo sendo link */
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none !important; /* Tira o sublinhado */
+    display: inline-block;
+    transition: background 0.2s ease;
+}
+
+.btn-curso:hover {
+    background: #1d4ed8;
+    color: white !important;
+}
+
+/* Remove estilos do li para o botão brilhar sozinho */
+article > section > ul > li {
+    background: none;
+    padding: 0;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #1f2937;
+    color: #9ca3af;
+    margin-top: 40px;
+}

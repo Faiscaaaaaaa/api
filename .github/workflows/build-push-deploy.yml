@@ -1,0 +1,76 @@
+name: Build, Push, and Deploy Django App
+
+on:
+  push:
+    branches:
+      - main 
+  workflow_dispatch:
+
+env:
+  STUDENT_ID: ${{ github.event.repository.name }}
+  REPOSITORY: pw-2425-alunos
+
+jobs:
+  build-and-push:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ env.REPOSITORY }}/${{ github.event.repository.name }}:latest
+
+  deploy:
+    runs-on: self-hosted
+    needs: build-and-push
+    steps:
+      - name: Deploy to Server over SSH
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.VM_IP }}
+          username: ${{ secrets.VM_USER }}
+          password: ${{ secrets.VM_PASSWORD }}
+          port:  ${{ secrets.VM_PORT }}
+          script: |
+            echo "Logging into GHCR..."
+            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            echo "Pulling latest Docker image..."
+            docker pull ghcr.io/${{ env.REPOSITORY }}/${{ github.event.repository.name }}:latest
+
+            echo "Stopping old container..."
+            docker stop ${{ env.STUDENT_ID }} || true
+            docker rm ${{ env.STUDENT_ID }} || true
+
+            echo "Checking required secrets..."
+            MISSING=0
+            [ -z "${{ secrets.DATABASE_URL }}" ]          && echo "ERROR: secret DATABASE_URL is not set"          && MISSING=1
+            [ -z "${{ secrets.CLOUDINARY_CLOUD_NAME }}" ] && echo "ERROR: secret CLOUDINARY_CLOUD_NAME is not set" && MISSING=1
+            [ -z "${{ secrets.CLOUDINARY_API_KEY }}" ]    && echo "ERROR: secret CLOUDINARY_API_KEY is not set"    && MISSING=1
+            [ -z "${{ secrets.CLOUDINARY_API_SECRET }}" ] && echo "ERROR: secret CLOUDINARY_API_SECRET is not set" && MISSING=1
+            [ $MISSING -eq 1 ] && echo "Define os secrets em: Settings → Secrets and variables → Actions" && exit 1
+
+            echo "Running new container for ${{ env.STUDENT_ID }}"
+            cat > .env.deploy <<'EOF'
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}
+            CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
+            CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
+            EOF
+
+            docker run -d --name ${{ env.STUDENT_ID }} --network vm-pw_pw-network --expose 3000 --env-file .env.deploy ghcr.io/${{ env.REPOSITORY }}/${{ github.event.repository.name }}:latest
+            rm -f .env.deploy
+
+            sleep 15
+            docker logs ${{ env.STUDENT_ID }}

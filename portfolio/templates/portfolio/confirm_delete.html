@@ -1,0 +1,18 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<div class="form-container" style="text-align: center; border-top: 5px solid var(--danger);">
+    <h2 style="color: var(--danger); margin-bottom: 1.5rem;">Confirmar Eliminação</h2>
+    <p style="font-size: 1.1rem; color: #475569; margin-bottom: 2rem;">
+        Tem a certeza que deseja eliminar permanentemente o item:<br>
+        <strong style="color: #1e293b; font-size: 1.3rem;">"{{ item }}"</strong>?
+    </p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <div style="display: flex; justify-content: center; gap: 1rem;">
+            <button type="submit" class="btn btn-delete">Sim, Eliminar Permanentemente</button>
+            <a href="javascript:history.back()" class="btn btn-back">Cancelar e Voltar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

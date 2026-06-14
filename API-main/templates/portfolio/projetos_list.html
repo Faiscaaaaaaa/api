@@ -1,0 +1,75 @@
+{% extends 'portfolio/layout.html' %}
+
+{% block content %}
+<h2>Lista de Eventos (API do Colega)</h2>
+
+<form method="get" class="filter-section">
+    <div class="filter-group">
+        <label>Ordenar</label>
+        <select name="ordering">
+            <option value="">--</option>
+            <option value="-id" {% if ordering == '-id' %}selected{% endif %}>Mais recentes</option>
+            <option value="id" {% if ordering == 'id' %}selected{% endif %}>Mais antigos</option>
+        </select>
+    </div>
+    <div class="filter-group">
+        <label>Pesquisar</label>
+        <input type="text" name="search" value="{{ search }}" placeholder="Título, data, localização...">
+    </div>
+    <div class="filter-actions">
+        <button type="submit" class="btn">Aplicar Filtros</button>
+        <a href="/api/projetos/" class="btn btn-secondary">Limpar</a>
+    </div>
+</form>
+
+{% if erro %}
+    <div class="alert-error">{{ erro }}</div>
+{% endif %}
+
+<div class="card mb-2">
+    <a href="/api/projetos/create/" class="btn">+ Criar Novo Evento</a>
+</div>
+
+{% if itens %}
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 10%;">ID</th>
+                <th>Título</th>
+                <th style="width: 20%;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in itens %}
+            <tr>
+                <td><strong>#{{ item.id }}</strong></td>
+                <td>
+                    {% if item.titulo %}
+                        {{ item.titulo }}
+                    {% elif item.title %}
+                        {{ item.title }}
+                    {% else %}
+                        {{ item.name }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/api/projetos/{{ item.id }}/" class="btn btn-secondary" style="margin-right: 0.5rem;">Ver</a>
+                    <form action="/api/projetos/{{ item.id }}/delete/" method="post" style="display:inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem a certeza que quer apagar este evento?');">Apagar</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="card text-center">
+        <p class="text-muted">Nenhum evento encontrado.</p>
+        <a href="/api/projetos/create/" class="btn">Criar o primeiro evento</a>
+    </div>
+{% endif %}
+
+<p class="text-center mt-4"><a href="{{ api_docs }}" target="_blank" class="text-muted">📖 Ver Documentação da API</a></p>
+
+{% endblock %}

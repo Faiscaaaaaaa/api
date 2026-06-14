@@ -1,0 +1,135 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto; padding: 2rem;">
+    
+    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+        <a href="{% url 'artigos:lista_artigos' %}" class="btn btn-back">← Voltar</a>
+        <h1 style="margin: 0;">{{ titulo }}</h1>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" 
+          style="background: var(--bg-card); padding: 2rem; border-radius: 1rem; box-shadow: var(--shadow);">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.titulo.id_for_label }}" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                Título
+            </label>
+            {{ form.titulo }}
+            {% if form.titulo.errors %}
+                <div style="color: var(--danger); font-size: 0.9rem; margin-top: 0.25rem;">
+                    {{ form.titulo.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.texto.id_for_label }}" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                Conteúdo
+            </label>
+            {{ form.texto }}
+            {% if form.texto.errors %}
+                <div style="color: var(--danger); font-size: 0.9rem; margin-top: 0.25rem;">
+                    {{ form.texto.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.fotografia.id_for_label }}" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                Fotografia
+            </label>
+            {{ form.fotografia }}
+            {% if form.fotografia.errors %}
+                <div style="color: var(--danger); font-size: 0.9rem; margin-top: 0.25rem;">
+                    {{ form.fotografia.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.link_externo.id_for_label }}" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                Link Externo (Opcional)
+            </label>
+            {{ form.link_externo }}
+            {% if form.link_externo.errors %}
+                <div style="color: var(--danger); font-size: 0.9rem; margin-top: 0.25rem;">
+                    {{ form.link_externo.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 2rem; justify-content: flex-end;">
+            <a href="{% url 'artigos:lista_artigos' %}" class="btn btn-back">
+                Cancelar
+            </a>
+            <button type="submit" class="btn" style="background-color: var(--success); color: white;">
+                ✓ Guardar Artigo
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    :root {
+        --primary: #3b82f6;
+        --success: #10b981;
+        --danger: #ef4444;
+        --secondary: #64748b;
+        --bg-card: #ffffff;
+        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.6rem 1.2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9rem;
+        gap: 0.5rem;
+    }
+
+    .btn-back {
+        background-color: var(--secondary);
+        color: white;
+    }
+
+    .btn-back:hover {
+        background-color: #475569;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        font-family: inherit;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 300px;
+    }
+</style>
+{% endblock %}
